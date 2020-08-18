@@ -1283,6 +1283,7 @@ class _BezierChartPainter extends CustomPainter {
       //only draw the footer for the first line because it is the same for all the lines
       if (!footerDrawed) footerDrawed = true;
 
+      canvas.drawShadow(path, Colors.black.withOpacity(0.7), 1, true);
       canvas.drawPath(path, paintLine);
       if (config.showDataPoints) {
         //draw data points
