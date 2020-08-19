@@ -1118,11 +1118,29 @@ class _BezierChartPainter extends CustomPainter {
             fontSize: 11,
           );
 
+      final Gradient gradient = new RadialGradient(
+        colors: <Color>[
+          Colors.green.withOpacity(1.0),
+          Colors.green.withOpacity(0.3),
+          Colors.yellow.withOpacity(0.2),
+          Colors.red.withOpacity(0.1),
+          Colors.red.withOpacity(0.0),
+        ],
+        stops: [
+          0.0,
+          0.5,
+          0.7,
+          0.9,
+          1.0,
+        ],
+      );
+
       Paint paintLine = Paint()
         ..color = line.lineColor
         ..strokeWidth = line.lineStrokeWidth
         ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round;
+        ..strokeCap = StrokeCap.round
+        ..shader = gradient.createShader(Rect.fromPoints(Offset(0, _maxValueY), Offset(_maxValueX, 0)));
 
       Paint paintXLines = Paint()
         ..color = config.xLinesColor
@@ -1283,7 +1301,7 @@ class _BezierChartPainter extends CustomPainter {
       //only draw the footer for the first line because it is the same for all the lines
       if (!footerDrawed) footerDrawed = true;
 
-      canvas.drawShadow(path, Colors.white.withOpacity(0.7), 2, true);
+      //canvas.drawShadow(path, Colors.white.withOpacity(0.7), 2, true);
       canvas.drawPath(path, paintLine);
       if (config.showDataPoints) {
         //draw data points
